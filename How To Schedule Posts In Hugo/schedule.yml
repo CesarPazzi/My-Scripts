@@ -1,0 +1,16 @@
+name: Daily Build
+on:
+  schedule:
+    - cron: "0 5 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Netlify Build
+        env:
+          NETLIFY_URL: ${{ secrets.BUILD_HOOK_URL }}
+        run: curl -s -X POST "https://api.netlify.com/build_hooks/$NETLIFY_URL"
